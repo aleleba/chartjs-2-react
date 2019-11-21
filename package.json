@@ -1,0 +1,19 @@
+  {
+  "name": "react-chartjs-2-aleleba",
+  "version": "1.0.0",
+  "description": "Libreria de chart.js para react desarrollada por Alejandro Lembke Barrientos.",
+  "main": "index.jsx",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "react",
+    "chart.js."
+  ],
+  "author": "Alejandro Lembke Barrientos",
+  "license": "MIT",
+  "dependencies": {
+    "chart.js": "^2.9.3",
+    "chartjs-chart-radial-gauge": "^1.0.3"
+  }
+}
