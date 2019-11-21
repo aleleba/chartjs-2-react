@@ -1,3 +1,5 @@
-import RadialGauge from './RadialGauge.jsx';
+import RadialGauge from './RadialGauge';
 
-export default { RadialGauge }
+module.exports = {
+  RadialGauge,
+}

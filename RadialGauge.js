@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 
-import './css/AvancesCard.css';
-
 import Chart from 'chart.js';
 
 import 'chartjs-chart-radial-gauge/build/Chart.RadialGauge.umd.min.js';
