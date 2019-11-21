@@ -1,5 +1,7 @@
-import RadialGauge from './RadialGauge';
+//import RadialGauge from './RadialGauge';
 
-module.exports = {
+export { default as RadialGauge } from './RadialGauge';
+
+/*module.exports = {
   RadialGauge,
-}
+}*/
