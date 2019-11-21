@@ -87,7 +87,7 @@ class RadialGauge extends Component {
 
   render() {
     return (          
-      <canvas id="chart"></canvas>
+      <canvas id="chart" />
     )
   }
 }
