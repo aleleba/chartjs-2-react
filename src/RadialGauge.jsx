@@ -4,6 +4,8 @@ import Chart from 'chart.js';
 
 import 'chartjs-chart-radial-gauge/build/Chart.RadialGauge.umd.min.js';
 
+import ID from './Service/ID.js'
+
 class RadialGauge extends Component {
 
   constructor(props) { 
@@ -11,8 +13,11 @@ class RadialGauge extends Component {
 
     let porcentaje = Math.round(Math.random() * 100),
         porcentajeTexto = `${porcentaje} %`
+        
+    let id = this.props.id ? this.props.id : ID()
 
     this.state = {
+      id,
       chart: null,
       porcentaje,
       porcentajeTexto
@@ -22,7 +27,7 @@ class RadialGauge extends Component {
 
   componentDidMount() {
 
-    var ctx = document.getElementById('chart').getContext('2d');
+    var ctx = document.getElementById(`${this.state.id}`).getContext('2d');
 
       var config = {
         type: 'radialGauge',
@@ -110,10 +115,10 @@ class RadialGauge extends Component {
 
       this.state.chart.update();
 
-      return <canvas id="chart" />
+      return <canvas id={`${this.state.id}`} />
 
     } else { 
-      return <canvas id="chart" />
+      return <canvas id={`${this.state.id}`} />
     }
   }
 }
