@@ -6,28 +6,31 @@ import 'chartjs-chart-radial-gauge/build/Chart.RadialGauge.umd.min.js';
 
 class RadialGauge extends Component {
 
-  componentDidMount(){
+  constructor(props) { 
+    super(props)
+
+    let porcentaje = Math.round(Math.random() * 100),
+        porcentajeTexto = `${porcentaje} %`
+
+    this.state = {
+      chart: null,
+      porcentaje,
+      porcentajeTexto
+    }
+
+  }
+
+  componentDidMount() {
 
     var ctx = document.getElementById('chart').getContext('2d');
-    
-    /*var gradientStroke = ctx.createLinearGradient(500, 0, 100, 0);
-    gradientStroke.addColorStop(0, "#2A969E");
-    gradientStroke.addColorStop(1, "#2A969E");*/
-    //gradientStroke.addColorStop(2, "#f49080");
 
-    var config
-
-    var randomScalingFactor = function() {
-      return Math.round(Math.random() * 100);
-     };
-
-    config = {
+      var config = {
         type: 'radialGauge',
         data: {
           labels: this.props.config ? (this.props.config.data ? (this.props.config.data.labels || ["Porcentaje"]) : ["Porcentaje"]) : ["Porcentaje"],
           datasets: [
            {
-            data: this.props.config ? ((this.props.config.data) ? (this.props.config.data.datasets !== undefined ? [this.props.config.data.datasets.data] : [randomScalingFactor()]) : [randomScalingFactor()]) : [randomScalingFactor()],
+            data: this.props.config ? ((this.props.config.data) ? (this.props.config.data.datasets !== undefined ? [this.props.config.data.datasets.data] : [this.state.porcentaje]) : [this.state.porcentaje]) : [this.state.porcentaje],
             backgroundColor: this.props.config ? ( this.props.config.data ? (((this.props.config.data.datasets !== undefined) && (this.props.config.data.datasets.backgroundColor)) ? this.props.config.data.datasets.backgroundColor : '#2A969E') : '#2A969E') : '#2A969E',
             borderWidth: this.props.config ? ( this.props.config.data ? (((this.props.config.data.datasets !== undefined) && (this.props.config.data.datasets.borderWidth)) ? this.props.config.data.datasets.borderWidth : 0) : 0) : 0,
             label: this.props.config ? ( this.props.config.data ? (((this.props.config.data.datasets !== undefined) && (this.props.config.data.datasets.label)) ? this.props.config.data.datasets.label : "Porcentaje") : "Porcentaje") : "Porcentaje"
@@ -87,15 +90,31 @@ class RadialGauge extends Component {
         }
       };
 
-
-    new Chart(ctx, config);
-
+    this.setState({
+      chart: new Chart(ctx, config)
+    })
+    
   }
 
   render() {
-    return (          
-      <canvas id="chart" />
-    )
+
+    if (this.state.chart !== null) {
+
+      this.props.config ? ((this.props.config.data) ? (this.props.config.data.datasets !== undefined ? (this.state.chart.data.datasets[0].data[0] = this.props.config.data.datasets.data) : [this.state.porcentaje]) : [this.state.porcentaje]) : [this.state.porcentaje]
+
+      //this.state.chart.data.datasets[0].data[0] = this.props.config.data.datasets.data)
+
+      this.props.config ? ((this.props.config.options) ? (this.props.config.options.centerArea !== undefined ? (this.state.chart.options.centerArea.text = this.props.config.options.centerArea.text) : null) : null) : null
+
+      //this.state.chart.options.centerArea.text = this.props.config.options.centerArea.text
+
+      this.state.chart.update();
+
+      return <canvas id="chart" />
+
+    } else { 
+      return <canvas id="chart" />
+    }
   }
 }
 
