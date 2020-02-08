@@ -2,7 +2,7 @@
 
 > Libreria de chart.js para React.js
 
-[![NPM](https://img.shields.io/npm/v/chart-2-react.svg)](https://www.npmjs.com/package/chart-2-react) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![NPM](https://img.shields.io/npm/v/chart-2-react.svg)](https://www.npmjs.com/package/chartjs-2-react) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 ## Install
 
