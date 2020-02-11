@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 
-import { Bar } from 'react-chartjs-2';
-
 import ID from './Service/ID.js';
 
 class BarComponent extends Component {
@@ -34,10 +32,6 @@ class BarComponent extends Component {
                     display: true,
                     position: 'bottom'
                 }
-            },
-            legend = {
-                display: true,
-                position: 'bottom'
             }
 
         for(let i = 0; i < 5 ; i ++){
@@ -50,35 +44,43 @@ class BarComponent extends Component {
     
         this.state = {
             id,
+            chart: null,
             data,
-            width: 100,
-            height: 50,
-            options,
-            legend,
-            redraw: false
+            options
         }
     
     }
 
     componentDidMount(){
-            
+
+        var ctx = document.getElementById(`${this.state.id}`).getContext('2d');
+
+        let config = {
+            type: 'bar',
+            data: (this.props.config !== undefined) && (this.props.config.data !== undefined) ? this.props.config.data : this.state.data,
+            options: (this.props.config !== undefined) && (this.props.config.options !== undefined) ? this.props.config.options : this.state.options
+        }
+
         this.setState({
             id: this.props.id !== undefined ? this.props.id : this.state.id,
-            data: this.props.data !== undefined ? this.props.data : this.state.data,
-            options: this.props.options !== undefined ? this.props.options : this.state.options,
-            width: this.props.width !== undefined ? this.props.width : this.state.width,
-            height: this.props.height !== undefined ? this.props.height : this.state.height,
-            legend: this.props.legend !== undefined ? this.props.legend : this.state.legend,
-            redraw: this.props.redraw !== undefined ? this.props.redraw : this.state.redraw
+            chart: new Chart(ctx, config)
         })
 
     }
 
     render(){
 
-        return(
-            <Bar id={this.state.id} data={this.state.data} options={this.state.options} width={this.state.width} height={this.state.height} legend={this.state.legend} redraw={this.state.redraw} />
-        )
+        if (this.state.chart !== null) {
+      
+            this.state.chart.update();
+    
+            return <canvas id={`${this.state.id}`} />
+
+    
+        } else { 
+            return <canvas id={`${this.state.id}`} />
+        }
+
     }
 }
 

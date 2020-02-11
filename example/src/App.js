@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { RadialGauge, Bar, Line } from 'chartjs-2-react';
 
 export default class App extends Component {
+
   render () {
 
     return (
@@ -26,4 +27,5 @@ export default class App extends Component {
       </div>
     )
   }
+  
 }
