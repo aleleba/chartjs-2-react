@@ -71,6 +71,15 @@ class BarComponent extends Component {
     render(){
 
         if (this.state.chart !== null) {
+
+            if((this.props.config !== undefined) && (this.props.config.data !== undefined)){
+                this.state.chart.data.labels = this.props.config.data.labels
+                this.state.chart.data.datasets = this.props.config.data.datasets
+            }
+
+            if((this.props.config !== undefined) && (this.props.config.options !== undefined)){
+                this.state.chart.options = this.props.config.options
+            }
       
             this.state.chart.update();
     
