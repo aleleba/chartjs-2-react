@@ -1,96 +1,87 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import ID from './Service/ID.js';
 
-class BarComponent extends Component {
+let BarComponent = props => {
 
-    constructor(props) {
-
-        super(props)
-
-        let id = this.props.id ? this.props.id : ID(),
-            data = {
-                labels: ['Valor 1', 'Valor 2', 'Valor 3', 'Valor 4', 'Valor 5'],
-                datasets: [{
-                    label: 'Valor',
-                    data: [],
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    borderWidth: 1
+    let id = props.id ? props.id : ID(),
+        data = {
+            labels: ['Valor 1', 'Valor 2', 'Valor 3', 'Valor 4', 'Valor 5'],
+            datasets: [{
+                label: 'Valor',
+                data: [],
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options = {
+            responsive: true,
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
                 }]
             },
-            options = {
-                responsive: true,
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                },
-                legend: {
-                    display: true,
-                    position: 'bottom'
-                }
+            legend: {
+                display: true,
+                position: 'bottom'
             }
+        }
 
-        for(let i = 0; i < 5 ; i ++){
-    
-            let dato = Math.round(Math.random() * 25)
-    
-            data.datasets[0].data.push(dato)
-    
-        }
-    
-        this.state = {
-            id,
-            chart: null,
-            data,
-            options
-        }
-    
+    for(let i = 0; i < 5 ; i ++){
+
+        let dato = Math.round(Math.random() * 25)
+
+        data.datasets[0].data.push(dato)
+
     }
 
-    componentDidMount(){
+    let [state, setState] = useState({
+        id,
+        chart: null,
+        data,
+        options
+    })
 
-        var ctx = document.getElementById(`${this.state.id}`).getContext('2d');
+    useEffect( ()=> {
+
+        var ctx = document.getElementById(`${state.id}`).getContext('2d');
 
         let config = {
             type: 'bar',
-            data: (this.props.config !== undefined) && (this.props.config.data !== undefined) ? this.props.config.data : this.state.data,
-            options: (this.props.config !== undefined) && (this.props.config.options !== undefined) ? this.props.config.options : this.state.options
+            data: (props.config !== undefined) && (props.config.data !== undefined) ? props.config.data : state.data,
+            options: (props.config !== undefined) && (props.config.options !== undefined) ? props.config.options : state.options
         }
 
-        this.setState({
-            id: this.props.id !== undefined ? this.props.id : this.state.id,
+        setState({
+            id: props.id !== undefined ? props.id : state.id,
             chart: new Chart(ctx, config)
         })
 
-    }
+    }, [props])
 
-    render(){
+    if (state.chart !== null) {
 
-        if (this.state.chart !== null) {
-
-            if((this.props.config !== undefined) && (this.props.config.data !== undefined)){
-                this.state.chart.data.labels = this.props.config.data.labels
-                this.state.chart.data.datasets = this.props.config.data.datasets
-            }
-
-            if((this.props.config !== undefined) && (this.props.config.options !== undefined)){
-                this.state.chart.options = this.props.config.options
-            }
-      
-            this.state.chart.update();
-    
-            return <canvas id={`${this.state.id}`} />
-
-    
-        } else { 
-            return <canvas id={`${this.state.id}`} />
+        if((props.config !== undefined) && (props.config.data !== undefined)){
+            state.chart.data.labels = props.config.data.labels
+            state.chart.data.datasets = props.config.data.datasets
         }
 
+        if((props.config !== undefined) && (props.config.options !== undefined)){
+            state.chart.options = props.config.options
+        }
+  
+        state.chart.update();
+
+        return <canvas id={`${state.id}`} />
+
+
+    } else { 
+        return <canvas id={`${state.id}`} />
     }
+
 }
 
 export default BarComponent
